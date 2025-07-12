@@ -40,15 +40,4 @@ Just run:
 run.bat
 ```
 
-<video controls autoplay muted loop>
-  <source src="demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-<style>
-  video {
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
-  }
-</style>
+![Demo of Stasis OS](demo.gif)
