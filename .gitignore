@@ -1,0 +1,15 @@
+
+*.o
+*.out
+*.elf
+*.bin
+*.map
+*.hex
+*.img
+
+build/
+bin/
+obj/
+
+.vscode/
+.idea/
