@@ -12,36 +12,40 @@ del /Q build\kernel.elf 2>nul
 
 REM compiling kernel
 echo Compiling kernel...
-i686-elf-gcc -m32 -ffreestanding -c kernel/kernel.c -o build\kernel.o
-i686-elf-gcc -m32 -ffreestanding -c drivers/vga.c -o build\vga.o
-i686-elf-gcc -m32 -ffreestanding -c drivers/std_IO.c -o build\std_IO.o
-i686-elf-gcc -m32 -ffreestanding -c shell/shell.c -o build\shell.o
-i686-elf-gcc -m32 -ffreestanding -c drivers/ATA_IO.c -o build\ATA_IO.o
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/kernel.c -o build\kernel.o
 
-i686-elf-gcc -m32 -ffreestanding -c lib/stdbool.c -o build\stdbool.o
-i686-elf-gcc -m32 -ffreestanding -c lib/stdstring.c -o build\stdstring.o
+REM cpu
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/cpu/x86/x86.c -o build\cpu.o
 
-REM kernel linking
+REM libs
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/stdlib/stdbool.c -o build\stdbool.o
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/stdlib/stdstring.c -o build\stdstring.o
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/stdlib/stdmem.c -o build\stdmem.o
+
+REM threads
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/thread/process.c -o build\process.o
+
+REM shell
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/shell/shell.c -o build\shell.o
+
+REM drivers
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/drivers/stdio.c -o build\stdio.o
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/drivers/vga.c -o build\vga.o
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/drivers/ataio.c -o build\ataio.o
+
+REM linking kernel
 echo Linking kernel...
-i686-elf-ld -T linker.ld -o build\kernel.elf build\ATA_IO.o build\kernel.o build\vga.o build\std_IO.o build\shell.o build\stdbool.o build\stdstring.o --oformat elf32-i386
+i686-elf-ld -T linker.ld -o build\kernel.elf build\stdmem.o ^
+    build\kernel.o build\stdbool.o build\stdstring.o build\stdio.o ^
+    build\shell.o build\process.o build\vga.o build\cpu.o^
+    --oformat elf32-i386
 
-REM searching for grub.cfg
-if exist iso\boot\grub\grub.cfg (
-    echo grub.cfg found
-) else (
-    echo grub.cfg not found, copying...
+REM creating virtual disk (only if doesn't exist)
+if not exist disk.img (
+    echo Creating virtual disk...
+    qemu-img create -f raw disk.img 64M
 )
-
-REM creating iso
-echo Creating ISO...
-wsl -d Ubuntu grub-mkrescue -o OS.iso iso
 
 REM running QEMU
 echo Running in QEMU...
-qemu-img create -f raw disk.img 64M
-qemu-system-i386 -kernel build\kernel.elf -hda disk.img -m 512M
-
-REM qemu-system-i386 -kernel build\kernel.elf
-
-REM Alternative run via ISO:
-REM qemu-system-i386 -cdrom OS.iso
+qemu-system-i386 -kernel build\kernel.elf -hda disk.img -m 512M -smp 2
