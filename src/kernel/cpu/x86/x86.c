@@ -1,7 +1,3 @@
-//
-// Created by stasi on 14.07.2025.
-//
-
 static inline void cpuid(unsigned int code, unsigned int* a, unsigned int* d, unsigned int* c, unsigned int* b) {
     asm volatile("cpuid"
             : "=a"(*a), "=d"(*d), "=c"(*c), "=b"(*b)

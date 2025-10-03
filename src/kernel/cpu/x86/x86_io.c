@@ -1,7 +1,3 @@
-//
-// Created by stasi on 07.07.2025.
-//
-
 unsigned char in_byte(unsigned short port)
 {
     unsigned char ret;

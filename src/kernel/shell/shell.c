@@ -1,4 +1,3 @@
-
 #include "../../../include/kernel/stdlib/stdstring.h"
 #include "../../../include/kernel/stdlib/stdbool.h"
 #include "../../../include/kernel/shell/shell.h"
@@ -14,7 +13,6 @@ void print_line(shell* sh, const char* line);
 void scroll_up(shell* sh);
 
 void shell_main(void* arg) {
-
     shell* sh = (shell*)arg;
     sh->is_running = true;
 
@@ -61,7 +59,7 @@ void shell_main(void* arg) {
     scroll_up(sh);
 
     while (sh->is_running) {
-
+        // infinite shell loop
     }
 }
 

@@ -1,7 +1,3 @@
-//
-// Created by stasi on 14.07.2025.
-//
-
 #ifndef STASISOS_STDMEM_H
 #define STASISOS_STDMEM_H
 

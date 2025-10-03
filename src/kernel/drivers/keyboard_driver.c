@@ -1,7 +1,3 @@
-//
-// Created by stasi on 14.07.2025.
-//
-
 char read_scancode()
 {
     return in_byte(DATA_PORT);
@@ -12,7 +8,6 @@ void flush_keyboard_buffer() {
         in_byte(DATA_PORT);
     }
 }
-
 
 char read_key()
 {

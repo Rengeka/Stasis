@@ -26,8 +26,8 @@ typedef struct process {
 } process;
 
 process* create_process(const char* name, void (*entry_point)(void*));
-process* get_process(int index);
-int get_process_count();
+process* get_process(int tid);
+unsigned int get_process_count();
 bool add_process(process* proc);
 
 #endif // PROCESS_H

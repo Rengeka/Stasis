@@ -8,13 +8,14 @@
 #define ATA_COMMAND     0x1F7
 #define ATA_STATUS      0x1F7
 
+// #include "" stdio
+
 static void ata_wait() {
     while (in_byte(ATA_STATUS) & 0x80);
     while (!(in_byte(ATA_STATUS) & 0x08));
 }
 
 void ata_write_sector(short lba, const char* data) {
-
     out_byte(ATA_HDDEVSEL, 0xE0 | ((lba >> 24) & 0x0F));
     out_byte(ATA_SECCOUNT0, 1);
     out_byte(ATA_LBA0, lba & 0xFF);
@@ -31,7 +32,6 @@ void ata_write_sector(short lba, const char* data) {
 }
 
 void ata_read_sector(short lba, char* data) {
-
     out_byte(ATA_HDDEVSEL, 0xE0 | ((lba >> 24) & 0x0F));
     out_byte(ATA_SECCOUNT0, 1);
     out_byte(ATA_LBA0, lba & 0xFF);

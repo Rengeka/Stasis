@@ -1,6 +1,4 @@
-//
-// Created by stasi on 14.07.2025.
-//
+// Created by Stanislav Ciobnau aka Rengeka on 14.07.2025.
 
 __attribute__((section(".multiboot")))
 const unsigned int multiboot_header[] = {

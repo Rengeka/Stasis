@@ -1,7 +1,3 @@
-//
-// Created by stasi on 08.07.2025.
-//
-
 #include "../../../include/kernel/stdlib/stdbool.h"
 
 int str_count(const char* str)

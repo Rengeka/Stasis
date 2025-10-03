@@ -16,6 +16,7 @@ i686-elf-gcc -m32 -ffreestanding -c src/kernel/kernel.c -o build\kernel.o
 
 REM cpu
 i686-elf-gcc -m32 -ffreestanding -c src/kernel/cpu/x86/x86.c -o build\cpu.o
+i686-elf-gcc -m32 -ffreestanding -c src/kernel/cpu/x86/x86_io.c -o build\stdio.o
 
 REM libs
 i686-elf-gcc -m32 -ffreestanding -c src/kernel/stdlib/stdbool.c -o build\stdbool.o
@@ -29,7 +30,6 @@ REM shell
 i686-elf-gcc -m32 -ffreestanding -c src/kernel/shell/shell.c -o build\shell.o
 
 REM drivers
-i686-elf-gcc -m32 -ffreestanding -c src/kernel/drivers/stdio.c -o build\stdio.o
 i686-elf-gcc -m32 -ffreestanding -c src/kernel/drivers/vga.c -o build\vga.o
 i686-elf-gcc -m32 -ffreestanding -c src/kernel/drivers/ataio.c -o build\ataio.o
 
